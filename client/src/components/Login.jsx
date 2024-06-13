@@ -23,13 +23,17 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post("/user/login", formData);
-      console.log("form submitted successfully", response);
       if (response) {
         dispatch(setAuthUser(response.data));
         navigateTo("/home");
       }
     } catch (error) {
-      console.log("error while submitting form", error);
+      const data = error?.response?.data;
+      if (data == "Incorrect username or password" || data == "User not found") {
+        alert(data);
+      }
+      else
+        console.log("error while submitting form", error);
     }
   };
 
