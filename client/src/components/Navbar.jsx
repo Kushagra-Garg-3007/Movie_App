@@ -27,29 +27,44 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-700 p-4">
+    <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="#" className="text-white text-2xl font-bold">
-          MovieX
-        </Link>
+        <div>
+          <Link to="/home" className="text-white text-2xl font-bold">
+            MovieX
+          </Link>
+          <Link className="text-white ml-[50px] text-lg font-bold" to="/lists">
+            MovieLists
+          </Link>
+        </div>
 
         {/* Links (hidden on small screens) */}
         <div className="hidden md:flex items-center space-x-4">
-          {authUser && <span className="text-white">Hi, {authUser.userName}</span>}
+          {authUser && (
+            <span className="text-white">Hi, {authUser.userName}</span>
+          )}
           {authUser ? (
-            <button
-              onClick={handleClick}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded cursor-pointer"
+            <Link
+              to="/createMovieList"
+              className="text-white hover:text-white px-3 py-2 rounded transition"
             >
-              Logout
-            </button>
+              Create MovieList
+            </Link>
           ) : (
             <Link
               to="/login"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded transition"
             >
               Login
             </Link>
+          )}
+          {authUser && (
+            <button
+              onClick={handleClick}
+              className="text-gray-300 hover:text-white px-3 py-2 rounded transition cursor-pointer"
+            >
+              Logout
+            </button>
           )}
         </div>
 
@@ -59,7 +74,7 @@ const Navbar = () => {
             onClick={toggleMenu}
             className="text-gray-300 focus:outline-none"
           >
-            <AlignJustify />
+            <AlignJustify className="w-6 h-6" />
           </button>
         </div>
       </div>
@@ -67,21 +82,36 @@ const Navbar = () => {
       {/* Mobile menu (hidden by default) */}
       <div className={`${isOpen ? "block" : "hidden"} md:hidden mt-4`}>
         <div className="flex flex-col items-start space-y-2">
-          {authUser && <span className="text-white">Hi, {authUser.userName}</span>}
+          {authUser && (
+            <span className="text-white">Hi, {authUser.userName}</span>
+          )}
           {authUser ? (
-            <button
-              onClick={handleClick}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded cursor-pointer"
+            <Link
+              to="/createMovieList"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded transition"
+              onClick={toggleMenu}
             >
-              Logout
-            </button>
+              Create MovieList
+            </Link>
           ) : (
             <Link
               to="/login"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded transition"
+              onClick={toggleMenu}
             >
               Login
             </Link>
+          )}
+          {authUser && (
+            <button
+              onClick={() => {
+                handleClick();
+                toggleMenu();
+              }}
+              className="text-gray-300 hover:text-white px-3 py-2 rounded transition cursor-pointer"
+            >
+              Logout
+            </button>
           )}
         </div>
       </div>
